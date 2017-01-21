@@ -18,6 +18,13 @@ public class PlayerController : MonoBehaviour
 	public float fireRate;
 	 
 	private float nextFire = 0;
+    private float previousHomeHorizontal = 0;
+    public Animator animator;
+
+    void Start()
+    {
+       animator = GetComponent<Animator>();
+    }
 	
 	void Update ()
 	{
@@ -32,16 +39,31 @@ public class PlayerController : MonoBehaviour
         float moveHorizontal;
         if (moveVertical != 0)
         {
+            animator.SetBool("Moving", true);
             moveHorizontal = Input.GetAxis("Horizontal");
         }
         else
         {
+            animator.SetBool("Moving", false);
             moveHorizontal = 0f;
         }
+
         // We set the coordinates like this because the game goes vertically.
-        
+        if (moveVertical > 0f)
+        {
+            moveVertical = 1f;
+            
+        }
+        else if (moveVertical < 0)
+        {
+            moveVertical = -1f;
+        }
+
+      
+        previousHomeHorizontal = Mathf.Abs(moveVertical);
+
         float previousRotation = this.transform.rotation.eulerAngles.z;
-        float newAngle = 2 * -1 * moveHorizontal + previousRotation;
+        float newAngle = 8 * -1 * moveHorizontal + previousRotation;
         this.transform.rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
            
         float newRotation = this.transform.rotation.eulerAngles.z;
