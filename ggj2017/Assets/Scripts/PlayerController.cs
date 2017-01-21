@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
 		{
 			nextFire = Time.time + fireRate;
 			Instantiate(shot, this.transform.position, this.transform.rotation);
+			EventManager.TriggerEvent("Sonar");
 			//GetComponent<AudioSource>().Play ();
 		}
 
