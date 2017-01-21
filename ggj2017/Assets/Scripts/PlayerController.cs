@@ -20,10 +20,16 @@ public class PlayerController : MonoBehaviour
 	private float nextFire = 0;
     private float previousHomeHorizontal = 0;
     public Animator animator;
+    public GameObject sonarS;
+    public GameObject sonarB;
+    private bool ActivateReturn;
+    private bool Activate;
 
     void Start()
     {
        animator = GetComponent<Animator>();
+       Activate = false;
+       ActivateReturn = false;
     }
 	
 	void Update ()
@@ -31,7 +37,14 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButton("Fire1") && Time.time > nextFire) 
 		{
 			nextFire = Time.time + fireRate;
-			Instantiate(shot, this.transform.position, this.transform.rotation);
+            //sonarS.SetActive(true);
+            //sonarS.SetActive(true);
+            Activate = true;
+            ActivateReturn = true;
+            sonarS.GetComponent<Animator>().SetBool("ActivateReturn", ActivateReturn);
+            sonarB.GetComponent<Animator>().SetBool("Activate", Activate);
+            StartCoroutine(EndAnimation());
+
 			EventManager.TriggerEvent("Sonar");
 			//GetComponent<AudioSource>().Play ();
 		}
@@ -76,10 +89,16 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate ()
 	{
-
-		
-		
 		// Rotation effect of the shuttle. 
 		//GetComponent<Rigidbody>().rotation = Quaternion.Euler (0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -tilt);
 	}
+
+    IEnumerator EndAnimation()
+    {
+        yield return new WaitForSeconds(1f);
+        Activate = false;
+        ActivateReturn = false;
+        sonarS.GetComponent<Animator>().SetBool("ActivateReturn", ActivateReturn);
+        sonarB.GetComponent<Animator>().SetBool("Activate", Activate);
+    }
 }
