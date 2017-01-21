@@ -7,15 +7,12 @@ Properties
  
 SubShader
 {
-        Tags {"Queue"="Transparent+1" "IgnoreProjector"="True"}
-        ZWrite Off
-        AlphaTest Greater 0.5
-        ColorMask 0
-        ZTest Always
+        Tags {"Queue"="Transparent" "IgnoreProjector"="True"} //write in the first layer of the transparent queue
+
  
  
-        Stencil {
-                                Ref 1
+        Stencil {   
+                                Ref 2    
                                 Comp always
                                 Pass replace
                         }

@@ -1,5 +1,5 @@
 ﻿
-Shader "Cg/Buttons"{
+Shader "Cg/secondBG"{
 	Properties
 	{
 		_MainTex ("Base (RGB)", 2D) = "white" {}
@@ -7,13 +7,12 @@ Shader "Cg/Buttons"{
 
 	SubShader
 	{
-		Tags {"Queue"="Transparent+1" "IgnoreProjector"="True" }  //write in the second layer of the transparent queue
-
+		Tags {"Queue"="Transparent+3" "IgnoreProjector"="True" }
 
 		Stencil {  
-			Ref 1
-			Comp Less
-			Pass Replace
+			Ref 0
+			Comp Equal
+			Pass Keep
 		}
 
 		Pass
