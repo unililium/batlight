@@ -7,7 +7,7 @@ public class EnemyAI : MonoBehaviour {
 
     private Transform targetPlayer;
 	private Seeker seeker;
-	private CharacterController controller;
+    private Rigidbody2D rb;
 	public float speed = 5;
 	// The calculated path
     public Path path;
@@ -21,9 +21,9 @@ public class EnemyAI : MonoBehaviour {
 
     public void Start ()
 	{
-		controller = GetComponent<CharacterController>();
 		targetPlayer = GameObject.FindWithTag("Player").transform;
         //Get a reference to the Seeker component we added earlier
+        rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
     }
 
@@ -64,10 +64,9 @@ public class EnemyAI : MonoBehaviour {
             return;
         }
         // Direction to the next waypoint
-        Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
+        //Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
 		float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, dir, step);
-
+        transform.position = Vector3.MoveTowards(transform.position, path.vectorPath[currentWaypoint], step);
         // The commented line is equivalent to the one below, but the one that is used
         // is slightly faster since it does not have to calculate a square root
         //if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < nextWaypointDistance) {
