@@ -22,14 +22,13 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public GameObject sonarS;
     public GameObject sonarB;
-    private bool ActivateReturn;
-    private bool Activate;
+    public GameObject waveEffect;
+    private bool activate;
 
     void Start()
     {
        animator = GetComponent<Animator>();
-       Activate = false;
-       ActivateReturn = false;
+       activate = false;
     }
 	
 	void Update ()
@@ -39,10 +38,10 @@ public class PlayerController : MonoBehaviour
 			nextFire = Time.time + fireRate;
             //sonarS.SetActive(true);
             //sonarS.SetActive(true);
-            Activate = true;
-            ActivateReturn = true;
-            sonarS.GetComponent<Animator>().SetBool("ActivateReturn", ActivateReturn);
-            sonarB.GetComponent<Animator>().SetBool("Activate", Activate);
+            activate = true;
+            sonarS.GetComponent<Animator>().SetBool("ActivateReturn", activate);
+            sonarB.GetComponent<Animator>().SetBool("Activate", activate);
+            waveEffect.GetComponent<Animator>().SetBool("Activate", activate);
             StartCoroutine(EndAnimation());
 
 			EventManager.TriggerEvent("Sonar");
@@ -96,9 +95,9 @@ public class PlayerController : MonoBehaviour
     IEnumerator EndAnimation()
     {
         yield return new WaitForSeconds(1f);
-        Activate = false;
-        ActivateReturn = false;
-        sonarS.GetComponent<Animator>().SetBool("ActivateReturn", ActivateReturn);
-        sonarB.GetComponent<Animator>().SetBool("Activate", Activate);
+        activate = false;
+        sonarS.GetComponent<Animator>().SetBool("ActivateReturn", activate);
+        sonarB.GetComponent<Animator>().SetBool("Activate", activate);
+        waveEffect.GetComponent<Animator>().SetBool("Activate", activate);
     }
 }
