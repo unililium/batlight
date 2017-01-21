@@ -7,7 +7,8 @@ public class EnemyAI : MonoBehaviour {
 
     private Transform targetPlayer;
 	private Seeker seeker;
-	public float speed = 5;
+    [Header("Enemy speed"), Range(0f, 50f)]
+	public float speed = 5f;
 	// The calculated path
     public Path path;
     // The max distance from the AI to a waypoint for it to continue to the next waypoint
@@ -21,8 +22,15 @@ public class EnemyAI : MonoBehaviour {
     private Vector3 target;
     public Transform[] dummyTr;
     private int indexDtr = 0;
+    private bool canChase = true;
+    [Header("Chase cooldown after sonar use is:"), Range(0f, 20f)]
+    public float chaseCooldownAfterSonar = 5f;
+    [Header("Enemy chases the player for x seconds:"), Range(0f, 20f)]
+    public float chaseForSeconds = 5f;
+    private float nextChase;
     private bool chasing = false;
     private float distanceToPlayer;
+    [Header("Enemy chases only if distance from player is less than x when she uses sonar:"), Range(0f, 200f)]
     public float triggerDistance;
 
     public void Start()
@@ -48,6 +56,7 @@ public class EnemyAI : MonoBehaviour {
         {
             targetPlayer = GameObject.FindWithTag("Player").transform;
             target = targetPlayer.position;
+            StartCoroutine(ChaseForSeconds());
         }
         else
         {
@@ -101,7 +110,23 @@ public class EnemyAI : MonoBehaviour {
 
     void ChasePlayer()
     {
-        if(distanceToPlayer < triggerDistance)
+        if(canChase && distanceToPlayer < triggerDistance)
+        {
             chasing = true;
+            canChase = false;
+            StartCoroutine(ResetCanChase());
+        }
+    }
+
+    IEnumerator ResetCanChase()
+    {
+        yield return new WaitForSeconds(chaseCooldownAfterSonar);
+        canChase = true;
+    }
+
+    IEnumerator ChaseForSeconds()
+    {
+        yield return new WaitForSeconds(chaseForSeconds);
+        chasing = false;
     }
 }
