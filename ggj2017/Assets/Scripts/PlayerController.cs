@@ -27,16 +27,32 @@ public class PlayerController : MonoBehaviour
 			Instantiate(shot, this.transform.position, this.transform.rotation);
 			//GetComponent<AudioSource>().Play ();
 		}
-	}
+
+        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal;
+        if (moveVertical != 0)
+        {
+            moveHorizontal = Input.GetAxis("Horizontal");
+        }
+        else
+        {
+            moveHorizontal = 0f;
+        }
+        // We set the coordinates like this because the game goes vertically.
+        
+        float previousRotation = this.transform.rotation.eulerAngles.z;
+        float newAngle = 2 * -1 * moveHorizontal + previousRotation;
+        this.transform.rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
+        float newRotation = this.transform.rotation.eulerAngles.z;
+        Vector3 movement = new Vector3(-1*moveVertical * Mathf.Sin(Mathf.Deg2Rad*newRotation) ,  moveVertical * Mathf.Cos(Mathf.Deg2Rad * newRotation), 0.0f);
+        Debug.Log(newAngle);
+        GetComponent<Rigidbody>().velocity = movement * speed;
+        Debug.Log(GetComponent<Rigidbody>().velocity);
+    }
 
 	void FixedUpdate ()
 	{
-		float moveHorizontal = Input.GetAxis ("Horizontal");
-		float moveVertical = Input.GetAxis ("Vertical");
 
-		// We set the coordinates like this because the game goes vertically.
-		Vector3 movement = new Vector3 (moveHorizontal, moveVertical, 0.0f);
-		GetComponent<Rigidbody>().velocity = movement * speed;
 		
 		
 		// Rotation effect of the shuttle. 
