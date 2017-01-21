@@ -5,15 +5,14 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour {
 
-	private Transform tr;
-    public Transform targetPlayer;
+    private Transform targetPlayer;
 	private Seeker seeker;
 	private CharacterController controller;
 	public float speed = 5;
 	// The calculated path
     public Path path;
     // The max distance from the AI to a waypoint for it to continue to the next waypoint
-    public float nextWaypointDistance = 0;
+    public float nextWaypointDistance = 3;
     // The waypoint we are currently moving towards
     private int currentWaypoint = 0;
     // How often to recalculate the path (in seconds)
@@ -22,7 +21,7 @@ public class EnemyAI : MonoBehaviour {
 
     public void Start ()
 	{
-		tr = GetComponent<Transform>();
+		controller = GetComponent<CharacterController>();
 		targetPlayer = GameObject.FindWithTag("Player").transform;
         //Get a reference to the Seeker component we added earlier
         seeker = GetComponent<Seeker>();
@@ -47,7 +46,7 @@ public class EnemyAI : MonoBehaviour {
             lastRepath = Time.time+ Random.value*repathRate*0.5f;
             // Start a new path to the targetPosition, call the the OnPathComplete function
             // when the path has been calculated (which may take a few frames depending on the complexity)
-            seeker.StartPath(tr.position, targetPlayer.position, OnPathComplete);
+            seeker.StartPath(transform.position, targetPlayer.position, OnPathComplete);
         }
 
         if (path == null)
@@ -66,9 +65,9 @@ public class EnemyAI : MonoBehaviour {
         }
         // Direction to the next waypoint
         Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
-        //dir *= speed;
 		float step = speed * Time.deltaTime;
-        tr.position = Vector3.MoveTowards(tr.position, dir, step);
+        transform.position = Vector3.MoveTowards(transform.position, dir, step);
+
         // The commented line is equivalent to the one below, but the one that is used
         // is slightly faster since it does not have to calculate a square root
         //if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < nextWaypointDistance) {
