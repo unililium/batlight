@@ -43,10 +43,11 @@ public class PlayerController : MonoBehaviour
         float previousRotation = this.transform.rotation.eulerAngles.z;
         float newAngle = 2 * -1 * moveHorizontal + previousRotation;
         this.transform.rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
+           
         float newRotation = this.transform.rotation.eulerAngles.z;
         Vector3 movement = new Vector3(-1*moveVertical * Mathf.Sin(Mathf.Deg2Rad*newRotation) ,  moveVertical * Mathf.Cos(Mathf.Deg2Rad * newRotation), 0.0f);
         //Debug.Log(newAngle);
-        GetComponent<Rigidbody2D>().velocity = movement * speed;
+        this.transform.position += movement * 0.1f;
         //Debug.Log(GetComponent<Rigidbody>().velocity);
     }
 
