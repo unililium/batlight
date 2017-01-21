@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour {
 	// The calculated path
     public Path path;
     // The max distance from the AI to a waypoint for it to continue to the next waypoint
-    public float nextWaypointDistance = 3;
+    public float nextWaypointDistance = 0;
     // The waypoint we are currently moving towards
     private int currentWaypoint = 0;
     // How often to recalculate the path (in seconds)
