@@ -7,7 +7,6 @@ public class EnemyAI : MonoBehaviour {
 
     private Transform targetPlayer;
 	private Seeker seeker;
-    private Rigidbody2D rb;
 	public float speed = 5;
 	// The calculated path
     public Path path;
@@ -23,7 +22,6 @@ public class EnemyAI : MonoBehaviour {
 	{
 		targetPlayer = GameObject.FindWithTag("Player").transform;
         //Get a reference to the Seeker component we added earlier
-        rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
     }
 
