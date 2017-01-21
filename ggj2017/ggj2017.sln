@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{E159319C-A793-F3BB-FE7B-374D0193B892}") = "ggj2017", "Assembly-CSharp-firstpass.csproj", "{7A2BD280-EA68-E7BA-AD9C-3942CCDF3D7F}"
-EndProject
-Project("{E159319C-A793-F3BB-FE7B-374D0193B892}") = "ggj2017", "Assembly-CSharp.csproj", "{61401D63-B18B-9ADE-BCAA-BDEEF33B0701}"
-EndProject
-Project("{E159319C-A793-F3BB-FE7B-374D0193B892}") = "ggj2017", "Assembly-CSharp-Editor.csproj", "{49EE9012-693A-1F12-D706-59D1CEB0730C}"
-=======
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
@@ -16,7 +6,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ggj2017", "Assembly-CSharp.csproj", "{61401D63-B18B-9ADE-BCAA-BDEEF33B0701}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ggj2017", "Assembly-CSharp-Editor.csproj", "{49EE9012-693A-1F12-D706-59D1CEB0730C}"
->>>>>>> refs/remotes/origin/master
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

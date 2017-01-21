@@ -19,7 +19,8 @@ public class EnemyAI : MonoBehaviour {
     private float lastRepath = -9999;
 
     private Vector3 target;
-    public Transform dummyTr;
+    public Transform[] dummyTr;
+    private int indexDtr = 0;
     private bool chasing = false;
     private float distanceToPlayer;
     public float triggerDistance;
@@ -50,7 +51,7 @@ public class EnemyAI : MonoBehaviour {
         }
         else
         {
-            target = dummyTr.position;
+            target = dummyTr[indexDtr].position;
         }
 
 		if (Time.time - lastRepath > repathRate && seeker.IsDone())
@@ -74,8 +75,9 @@ public class EnemyAI : MonoBehaviour {
             //Debug.Log("End Of Path Reached");
             if(!chasing)
             {
-                //target = dummyTr.position;
-                //seeker.StartPath(transform.position, target, OnPathComplete);
+                indexDtr = indexDtr != dummyTr.Length - 1 ? indexDtr + 1 : 0;
+                target = dummyTr[indexDtr].position;
+                seeker.StartPath(transform.position, target, OnPathComplete);
             }
             currentWaypoint++;
             return;
