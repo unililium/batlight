@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButton("Fire1") && Time.time > nextFire) 
 		{
 			nextFire = Time.time + fireRate;
-			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
-			GetComponent<AudioSource>().Play ();
+			Instantiate(shot, this.transform.position, this.transform.rotation);
+			//GetComponent<AudioSource>().Play ();
 		}
 	}
 
@@ -40,6 +40,6 @@ public class PlayerController : MonoBehaviour
 		
 		
 		// Rotation effect of the shuttle. 
-		GetComponent<Rigidbody>().rotation = Quaternion.Euler (0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -tilt);
+		//GetComponent<Rigidbody>().rotation = Quaternion.Euler (0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -tilt);
 	}
 }

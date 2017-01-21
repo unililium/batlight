@@ -12,6 +12,7 @@ public class SonicWave : MonoBehaviour {
 	void Update () {
         if (this.gameObject.transform.localScale.x < 20f)
         {
+            this.GetComponent<SphereCollider>().radius += 0.01f;
             this.gameObject.transform.localScale += new Vector3(0.1f, 0.1f, 0);
         }
 	}
