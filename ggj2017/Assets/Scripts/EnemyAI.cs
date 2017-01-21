@@ -7,7 +7,6 @@ public class EnemyAI : MonoBehaviour {
 
     private Transform targetPlayer;
 	private Seeker seeker;
-    private Rigidbody2D rb;
 	public float speed = 5;
 	// The calculated path
     public Path path;
@@ -19,15 +18,21 @@ public class EnemyAI : MonoBehaviour {
     public float repathRate = 0.1f;
     private float lastRepath = -9999;
 
-    public void Start ()
+    private Vector3 target;
+    public Transform dummyTr;
+    private bool chasing = false;
+    private float distanceToPlayer;
+    public float triggerDistance;
+
+    public void Start()
 	{
 		targetPlayer = GameObject.FindWithTag("Player").transform;
         //Get a reference to the Seeker component we added earlier
-        rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
+        EventManager.StartListening ("Sonar", ChasePlayer);
     }
 
-    public void OnPathComplete (Path p)
+    public void OnPathComplete(Path p)
 	{
 		if (!p.error) {
             path = p;
@@ -38,15 +43,22 @@ public class EnemyAI : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		targetPlayer = GameObject.FindWithTag("Player").transform;
-		//Debug.Log ("player pos "+targetPlayer.position);
-		
+        if(chasing)
+        {
+            targetPlayer = GameObject.FindWithTag("Player").transform;
+            target = targetPlayer.position;
+        }
+        else
+        {
+            target = dummyTr.position;
+        }
+
 		if (Time.time - lastRepath > repathRate && seeker.IsDone())
 		{
             lastRepath = Time.time+ Random.value*repathRate*0.5f;
             // Start a new path to the targetPosition, call the the OnPathComplete function
             // when the path has been calculated (which may take a few frames depending on the complexity)
-            seeker.StartPath(transform.position, targetPlayer.position, OnPathComplete);
+            seeker.StartPath(transform.position, target, OnPathComplete);
         }
 
         if (path == null)
@@ -59,14 +71,22 @@ public class EnemyAI : MonoBehaviour {
 
         if (currentWaypoint == path.vectorPath.Count)
 		{
-            Debug.Log("End Of Path Reached");
+            //Debug.Log("End Of Path Reached");
+            if(!chasing)
+            {
+                //target = dummyTr.position;
+                //seeker.StartPath(transform.position, target, OnPathComplete);
+            }
             currentWaypoint++;
             return;
         }
         // Direction to the next waypoint
-        //Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
+        distanceToPlayer = (transform.position - targetPlayer.position).magnitude;
+        Vector3 dir = (path.vectorPath[currentWaypoint] - targetPlayer.position).normalized;
+
 		float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, path.vectorPath[currentWaypoint], step);
+
         // The commented line is equivalent to the one below, but the one that is used
         // is slightly faster since it does not have to calculate a square root
         //if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < nextWaypointDistance) {
@@ -76,4 +96,10 @@ public class EnemyAI : MonoBehaviour {
             return;
         }
 	}
+
+    void ChasePlayer()
+    {
+        if(distanceToPlayer < triggerDistance)
+            chasing = true;
+    }
 }
