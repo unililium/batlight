@@ -1,1 +1,5 @@
+<<<<<<< HEAD
+m_EditorVersion: 5.5.0f3
+=======
 m_EditorVersion: 5.5.0xp1Linux
+>>>>>>> refs/remotes/origin/master
