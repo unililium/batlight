@@ -1,3 +1,3 @@
 # giocoperlaggj2017
 un giuoco<br>
-Powered by arongranberg.com/astar/
+Powered by http://arongranberg.com/astar/

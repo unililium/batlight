@@ -6,8 +6,11 @@ using Pathfinding;
 public class EnemyAI : MonoBehaviour {
 
     private Transform targetPlayer;
+    private Rigidbody2D rb;
 	private Seeker seeker;
 	public float speed = 5;
+    public float accel;
+    public float maxSpeed;
 	// The calculated path
     public Path path;
     // The max distance from the AI to a waypoint for it to continue to the next waypoint
@@ -23,6 +26,7 @@ public class EnemyAI : MonoBehaviour {
 		targetPlayer = GameObject.FindWithTag("Player").transform;
         //Get a reference to the Seeker component we added earlier
         seeker = GetComponent<Seeker>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     public void OnPathComplete (Path p)
@@ -37,7 +41,6 @@ public class EnemyAI : MonoBehaviour {
 	void FixedUpdate()
 	{
 		targetPlayer = GameObject.FindWithTag("Player").transform;
-		//Debug.Log ("player pos "+targetPlayer.position);
 		
 		if (Time.time - lastRepath > repathRate && seeker.IsDone())
 		{
@@ -57,14 +60,20 @@ public class EnemyAI : MonoBehaviour {
 
         if (currentWaypoint == path.vectorPath.Count)
 		{
-            Debug.Log("End Of Path Reached");
+            //Debug.Log("End Of Path Reached");
             currentWaypoint++;
             return;
         }
         // Direction to the next waypoint
-        //Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
+        Vector3 distanceToPlayer = path.vectorPath[currentWaypoint] - targetPlayer.position;
+        Vector3 dir = distanceToPlayer.normalized;
+
+        //rb.AddForce(dir * accel);
+        //rb.velocity = rb.velocity.normalized * maxSpeed;
+
 		float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, path.vectorPath[currentWaypoint], step);
+
         // The commented line is equivalent to the one below, but the one that is used
         // is slightly faster since it does not have to calculate a square root
         //if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < nextWaypointDistance) {
