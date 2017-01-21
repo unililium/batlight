@@ -93,9 +93,12 @@ public class EnemyAI : MonoBehaviour {
         }
         // Direction to the next waypoint
         distanceToPlayer = (transform.position - targetPlayer.position).magnitude;
-        Vector3 dir = (path.vectorPath[currentWaypoint] - targetPlayer.position).normalized;
+        Vector3 dir = (path.vectorPath[currentWaypoint] - target).normalized;
 
 		float step = speed * Time.deltaTime;
+        Vector3 targetToRotateTo = currentWaypoint < path.vectorPath.Count - 3 ? path.vectorPath[currentWaypoint + 2] : target;
+        transform.LookAt(targetToRotateTo);
+        transform.Rotate(0f, 90f, 90f); 
         transform.position = Vector3.MoveTowards(transform.position, path.vectorPath[currentWaypoint], step);
 
         // The commented line is equivalent to the one below, but the one that is used
