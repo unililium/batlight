@@ -121,7 +121,14 @@ public class PlayerController : MonoBehaviour
         Debug.Log("COLLISSION Player");
         if (other.gameObject.tag == "Enemy")
         {
+            other.gameObject.GetComponent<Animator>().SetBool("Attacking", true);
             animator.SetBool("Death", true);
+            isAlive = false;
+        }
+        if (other.gameObject.tag == "Aurea")
+        {
+            Debug.Log("AUREAAAAAAAAA");
+            other.gameObject.GetComponentInChildren<Animator>().SetBool("Opening", true);
             isAlive = false;
         }
     }

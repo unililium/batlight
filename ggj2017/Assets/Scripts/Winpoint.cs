@@ -14,7 +14,12 @@ public class Winpoint : MonoBehaviour {
         Debug.Log("COLLISSION");
 		if(other.gameObject.tag == "Player")
 		{
-            Application.LoadLevel("Winner");
+           // Application.LoadLevel("Winner");
 		}
 	}
+
+    void winning()
+    {
+        Application.LoadLevel("Winner");
+    }
 }
