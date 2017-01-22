@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public GameObject sonarS;
     public GameObject sonarB;
     public GameObject waveEffect;
+    public GameObject revDisc;
     private bool activate;
 
     void Start()
@@ -37,8 +38,6 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButton("Fire1") && Time.time > nextFire) 
 		{
 			nextFire = Time.time + fireRate;
-            //sonarS.SetActive(true);
-            //sonarS.SetActive(true);
             activate = true;
             sonarS.GetComponent<Animator>().SetBool("ActivateReturn", activate);
             sonarB.GetComponent<Animator>().SetBool("Activate", activate);
