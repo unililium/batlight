@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ShowPanels : MonoBehaviour {
@@ -48,7 +48,7 @@ public class ShowPanels : MonoBehaviour {
 	{
 		menuPanel.SetActive (false);
 	}
-	
+
 	//Call this function to activate and display the Pause panel during game play
 	public void ShowPausePanel()
 	{
