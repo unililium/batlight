@@ -125,6 +125,12 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Death", true);
             isAlive = false;
         }
+        if (other.gameObject.tag == "Aurea")
+        {
+            Debug.Log("AUREAAAAAAAAA");
+            other.gameObject.GetComponentInChildren<Animator>().SetBool("Opening", true);
+            isAlive = false;
+        }
     }
 
     IEnumerator DoSomething(float f)
