@@ -36,6 +36,8 @@ public class EnemyAI : MonoBehaviour {
     public float triggerDistance;
     private int rotCounter = 4;
 
+	bool attacking;
+
     public void Start()
 	{
 		targetPlayer = GameObject.FindWithTag("Player").transform;
@@ -43,6 +45,7 @@ public class EnemyAI : MonoBehaviour {
         //Get a reference to the Seeker component we added earlier
         seeker = GetComponent<Seeker>();
         EventManager.StartListening ("Sonar", ChasePlayer);
+		EventManager.StartListening ("playLama", PlayLama);
     }
 
     public void OnPathComplete(Path p)
@@ -56,7 +59,8 @@ public class EnemyAI : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-        if(chasing)
+		
+		if(chasing)
         {
             targetPlayer = GameObject.FindWithTag("Player").transform;
             target = targetPlayer.position;
@@ -151,19 +155,10 @@ public class EnemyAI : MonoBehaviour {
         chasing = false;
     }
 
-    /// <summary>
-    /// Sent when another object enters a collider attached to this
-    /// object (2D physics only).
-    /// </summary>
-    /// <param name="other">The other Collider2D involved in this collision.</param>
-    void OnColliderEnter2D(Collider2D other)
-    {
-        Debug.Log("COLLISION MONSTERR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        if(other.gameObject.tag == "Player")
-        {
-            // End game
-            animator.SetBool("Attacking", true);
-            other.gameObject.SetActive(false);
-        }
-    }
+	void PlayLama(){
+		GetComponent<AudioSource> ().pitch = Random.Range (0.95f, 1.05f);
+		GetComponent<AudioSource> ().Play();
+	}
+
+    
 }
