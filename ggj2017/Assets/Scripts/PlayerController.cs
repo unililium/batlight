@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("COLLISSION Player");
         if (other.gameObject.tag == "Enemy")
         {
+            other.gameObject.GetComponent<Animator>().SetBool("Attacking", true);
             animator.SetBool("Death", true);
             isAlive = false;
         }
