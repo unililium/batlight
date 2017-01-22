@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{E159319C-A793-F3BB-FE7B-374D0193B892}") = "ggj2017", "Assembly-CSharp-firstpass.csproj", "{7A2BD280-EA68-E7BA-AD9C-3942CCDF3D7F}"
+EndProject
+Project("{E159319C-A793-F3BB-FE7B-374D0193B892}") = "ggj2017", "Assembly-CSharp.csproj", "{61401D63-B18B-9ADE-BCAA-BDEEF33B0701}"
+EndProject
+Project("{E159319C-A793-F3BB-FE7B-374D0193B892}") = "ggj2017", "Assembly-CSharp-Editor.csproj", "{49EE9012-693A-1F12-D706-59D1CEB0730C}"
+=======
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
@@ -5,7 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ggj2017", "Assembly-CSharp-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ggj2017", "Assembly-CSharp.csproj", "{61401D63-B18B-9ADE-BCAA-BDEEF33B0701}"
 EndProject
+<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ggj2017", "Assembly-CSharp-Editor.csproj", "{49EE9012-693A-1F12-D706-59D1CEB0730C}"
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ggj2017.CSharp.Editor", "ggj2017.CSharp.Editor.csproj", "{5EEFA01C-ACF2-ACD7-3E40-7320FC0E35B7}"
+>>>>>>> ae0fa75d9bb1b3d7334f933aa1cd0d1a0fc7aa9c
+>>>>>>> 4e73e41a5da7d7f9aeb01f345702523c2b564725
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -40,11 +40,11 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButton("Fire1") && Time.time > nextFire && isAlive) 
 		{
 			nextFire = Time.time + fireRate;
-            activate = true;
-            sonarS.GetComponent<Animator>().SetBool("ActivateReturn", activate);
-            sonarB.GetComponent<Animator>().SetBool("Activate", activate);
-            waveEffect.GetComponent<Animator>().SetBool("Activate", activate);
-            StartCoroutine(EndAnimation());
+//            activate = true;
+//            sonarS.GetComponent<Animator>().SetBool("ActivateReturn", activate);
+//            sonarB.GetComponent<Animator>().SetBool("Activate", activate);
+//            waveEffect.GetComponent<Animator>().SetBool("Activate", activate);
+//            StartCoroutine(EndAnimation());
 
 			EventManager.TriggerEvent("Sonar");
 			//GetComponent<AudioSource>().Play ();
@@ -102,14 +102,14 @@ public class PlayerController : MonoBehaviour
 		//GetComponent<Rigidbody>().rotation = Quaternion.Euler (0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -tilt);
 	}
 
-    IEnumerator EndAnimation()
-    {
-        yield return new WaitForSeconds(2f);
-        activate = false;
-        sonarS.GetComponent<Animator>().SetBool("ActivateReturn", activate);
-        sonarB.GetComponent<Animator>().SetBool("Activate", activate);
-        waveEffect.GetComponent<Animator>().SetBool("Activate", activate);
-    }
+//    IEnumerator EndAnimation()
+//    {
+//        yield return new WaitForSeconds(2f);
+//        activate = false;
+//        sonarS.GetComponent<Animator>().SetBool("ActivateReturn", activate);
+//        sonarB.GetComponent<Animator>().SetBool("Activate", activate);
+//        waveEffect.GetComponent<Animator>().SetBool("Activate", activate);
+//    }
 
     /// <summary>
 	/// Sent when another object enters a trigger collider attached to this
