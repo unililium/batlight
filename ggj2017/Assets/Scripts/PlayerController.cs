@@ -29,11 +29,18 @@ public class PlayerController : MonoBehaviour
     private bool isAlive;
 	public int rotationSpeed;
 
+
+	public AudioClip [] sonarClips;
+	public AudioClip winClip;
+	AudioSource flapSource;
+
     void Start()
     {
        animator = GetComponent<Animator>();
        activate = false;
         isAlive = true;
+		flapSource = GetComponent<AudioSource> ();
+
     }
 	
 	void Update ()
@@ -42,13 +49,8 @@ public class PlayerController : MonoBehaviour
 		{
 			nextFire = Time.time + fireRate;
 			activate = true;
-//            sonarS.GetComponent<Animator>().SetBool("ActivateReturn", activate);
-//            sonarB.GetComponent<Animator>().SetBool("Activate", activate);
-//            waveEffect.GetComponent<Animator>().SetBool("Activate", activate);
-//            StartCoroutine(EndAnimation());
-
 			EventManager.TriggerEvent("Sonar");
-			//GetComponent<AudioSource>().Play ();
+			SoundManager.Instance.PlaySingle (sonarClips[Random.Range(0, sonarClips.Length)]);
 		}
 		animator.SetBool ("Activate", activate);
         if (isAlive) { 
@@ -58,7 +60,9 @@ public class PlayerController : MonoBehaviour
 			if (moveVertical != 0)
             {
                 animator.SetBool("Moving", true);
-                
+				if (Random.Range (0, 60) == 0) {
+					PlayFlap ();
+				}
             }
             else
             {
@@ -124,12 +128,14 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             other.gameObject.GetComponent<Animator>().SetBool("Attacking", true);
+			EventManager.TriggerEvent ("playLama");
             animator.SetBool("Death", true);
             isAlive = false;
         }
         if (other.gameObject.tag == "Aurea")
         {
             Debug.Log("AUREAAAAAAAAA");
+			SoundManager.Instance.PlaySingle (winClip);
             other.gameObject.GetComponentInChildren<Animator>().SetBool("Opening", true);
             isAlive = false;
         }
@@ -144,5 +150,11 @@ public class PlayerController : MonoBehaviour
 		activate = false;
 		animator.SetBool ("Activate", activate);
 		Debug.Log ("endanimation");
+	}
+
+	void PlayFlap(){
+		float randomPitch = Random.Range (0.95f, 1.05f);
+		flapSource.pitch = randomPitch;
+		flapSource.Play ();
 	}
 }
