@@ -24,16 +24,18 @@ public class PlayerController : MonoBehaviour
     public GameObject sonarB;
     public GameObject waveEffect;
     private bool activate;
+    private bool isAlive;
 
     void Start()
     {
        animator = GetComponent<Animator>();
        activate = false;
+        isAlive = true;
     }
 	
 	void Update ()
 	{
-		if (Input.GetButton("Fire1") && Time.time > nextFire) 
+		if (Input.GetButton("Fire1") && Time.time > nextFire && isAlive) 
 		{
 			nextFire = Time.time + fireRate;
             //sonarS.SetActive(true);
@@ -47,43 +49,51 @@ public class PlayerController : MonoBehaviour
 			EventManager.TriggerEvent("Sonar");
 			//GetComponent<AudioSource>().Play ();
 		}
+        if (isAlive) { 
+            float moveVertical = Input.GetAxis("Vertical");
+            float moveHorizontal;
+            if (moveVertical != 0)
+            {
+                animator.SetBool("Moving", true);
+                moveHorizontal = Input.GetAxis("Horizontal");
+            }
+            else
+            {
+                animator.SetBool("Moving", false);
+                moveHorizontal = 0f;
+            }
 
-        float moveVertical = Input.GetAxis("Vertical");
-        float moveHorizontal;
-        if (moveVertical != 0)
-        {
-            animator.SetBool("Moving", true);
-            moveHorizontal = Input.GetAxis("Horizontal");
-        }
-        else
-        {
-            animator.SetBool("Moving", false);
-            moveHorizontal = 0f;
-        }
-
-        // We set the coordinates like this because the game goes vertically.
-        if (moveVertical > 0f)
-        {
-            moveVertical = 1f;
+            // We set the coordinates like this because the game goes vertically.
+            if (moveVertical > 0f)
+            {
+                moveVertical = 1f;
             
-        }
-        else if (moveVertical < 0)
-        {
-            moveVertical = -1f;
-        }
+            }
+            else if (moveVertical < 0)
+            {
+                moveVertical = -1f;
+            }
 
       
-        previousHomeHorizontal = Mathf.Abs(moveVertical);
+            previousHomeHorizontal = Mathf.Abs(moveVertical);
 
-        float previousRotation = this.transform.rotation.eulerAngles.z;
-        float newAngle = 8 * -1 * moveHorizontal + previousRotation;
-        this.transform.rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
+            float previousRotation = this.transform.rotation.eulerAngles.z;
+            float newAngle = 8 * -1 * moveHorizontal + previousRotation;
+            this.transform.rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
            
-        float newRotation = this.transform.rotation.eulerAngles.z;
-        Vector3 movement = new Vector3(-1*moveVertical * Mathf.Sin(Mathf.Deg2Rad*newRotation) ,  moveVertical * Mathf.Cos(Mathf.Deg2Rad * newRotation), 0.0f);
-        //Debug.Log(newAngle);
-        this.transform.position += movement * 0.1f;
-        //Debug.Log(GetComponent<Rigidbody>().velocity);
+            float newRotation = this.transform.rotation.eulerAngles.z;
+            Vector3 movement = new Vector3(-1*moveVertical * Mathf.Sin(Mathf.Deg2Rad*newRotation) ,  moveVertical * Mathf.Cos(Mathf.Deg2Rad * newRotation), 0.0f);
+            //Debug.Log(newAngle);
+            this.transform.position += movement * 0.1f;
+            //Debug.Log(GetComponent<Rigidbody>().velocity);
+        }
+
+    }
+
+    void onDeathEnded()
+    {
+         Application.LoadLevel("Loser");
+
     }
 
 	void FixedUpdate ()
@@ -111,7 +121,14 @@ public class PlayerController : MonoBehaviour
         Debug.Log("COLLISSION Player");
         if (other.gameObject.tag == "Enemy")
         {
-            Application.LoadLevel("Loser");
+            animator.SetBool("Death", true);
+            isAlive = false;
         }
+    }
+
+    IEnumerator DoSomething(float f)
+    {
+        yield return new WaitForSeconds(f);
+
     }
 }
