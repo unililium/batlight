@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButton("Fire1") && Time.time > nextFire && isAlive) 
 		{
 			nextFire = Time.time + fireRate;
-//            activate = true;
+			activate = true;
 //            sonarS.GetComponent<Animator>().SetBool("ActivateReturn", activate);
 //            sonarB.GetComponent<Animator>().SetBool("Activate", activate);
 //            waveEffect.GetComponent<Animator>().SetBool("Activate", activate);
@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
 			EventManager.TriggerEvent("Sonar");
 			//GetComponent<AudioSource>().Play ();
 		}
+		animator.SetBool ("Activate", activate);
         if (isAlive) { 
             float moveVertical = Input.GetAxis("Vertical");
             float moveHorizontal;
@@ -138,4 +139,8 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(f);
 
     }
+	void EndAnimation(){
+		activate = false;
+		animator.SetBool ("Activate", activate);
+	}
 }
