@@ -9,6 +9,7 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour
 {
+    [Range(0f, 50f)]
 	public float speed;
 	public float tilt;
 	public Boundary boundary;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public GameObject sonarS;
     public GameObject sonarB;
     public GameObject waveEffect;
+    public GameObject revDisc;
     private bool activate;
     private bool isAlive;
 
@@ -38,8 +40,6 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButton("Fire1") && Time.time > nextFire && isAlive) 
 		{
 			nextFire = Time.time + fireRate;
-            //sonarS.SetActive(true);
-            //sonarS.SetActive(true);
             activate = true;
             sonarS.GetComponent<Animator>().SetBool("ActivateReturn", activate);
             sonarB.GetComponent<Animator>().SetBool("Activate", activate);

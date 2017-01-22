@@ -32,6 +32,7 @@ public class EnemyAI : MonoBehaviour {
     private float distanceToPlayer;
     [Header("Enemy chases only if distance from player is less than x when she uses sonar:"), Range(0f, 200f)]
     public float triggerDistance;
+    private int rotCounter = 4;
 
     public void Start()
 	{
@@ -95,10 +96,24 @@ public class EnemyAI : MonoBehaviour {
         distanceToPlayer = (transform.position - targetPlayer.position).magnitude;
         Vector3 dir = (path.vectorPath[currentWaypoint] - target).normalized;
 
-		float step = speed * Time.deltaTime;
-        Vector3 targetToRotateTo = currentWaypoint < path.vectorPath.Count - 3 ? path.vectorPath[currentWaypoint + 2] : target;
-        transform.LookAt(targetToRotateTo);
-        transform.Rotate(0f, 90f, 90f); 
+		if(rotCounter == 4)
+        {
+            Vector3 targetToRotateTo = currentWaypoint < path.vectorPath.Count - 3 ? path.vectorPath[currentWaypoint + 2] : target;
+            transform.LookAt(targetToRotateTo);
+            transform.Rotate(0f, 90f, 90f);
+            rotCounter--;
+        }
+        else if(rotCounter == 0)
+        {
+            rotCounter = 4;
+        }
+        else
+        {
+            rotCounter--;
+        }
+
+
+        float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, path.vectorPath[currentWaypoint], step);
 
         // The commented line is equivalent to the one below, but the one that is used
