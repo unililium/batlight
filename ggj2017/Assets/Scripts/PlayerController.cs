@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public GameObject revDisc;
     private bool activate;
     private bool isAlive;
+	public int rotationSpeed;
 
     void Start()
     {
@@ -53,15 +54,15 @@ public class PlayerController : MonoBehaviour
         if (isAlive) { 
             float moveVertical = Input.GetAxis("Vertical");
             float moveHorizontal;
-            if (moveVertical != 0)
+			moveHorizontal = Input.GetAxis("Horizontal");
+			if (moveVertical != 0)
             {
                 animator.SetBool("Moving", true);
-                moveHorizontal = Input.GetAxis("Horizontal");
+                
             }
             else
             {
                 animator.SetBool("Moving", false);
-                moveHorizontal = 0f;
             }
 
             // We set the coordinates like this because the game goes vertically.
@@ -79,7 +80,7 @@ public class PlayerController : MonoBehaviour
             previousHomeHorizontal = Mathf.Abs(moveVertical);
 
             float previousRotation = this.transform.rotation.eulerAngles.z;
-            float newAngle = 8 * -1 * moveHorizontal + previousRotation;
+			float newAngle = rotationSpeed * -1 * moveHorizontal + previousRotation;
             this.transform.rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
            
             float newRotation = this.transform.rotation.eulerAngles.z;
