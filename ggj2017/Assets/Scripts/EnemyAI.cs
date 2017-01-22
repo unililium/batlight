@@ -19,6 +19,8 @@ public class EnemyAI : MonoBehaviour {
     public float repathRate = 0.1f;
     private float lastRepath = -9999;
 
+    private Animator animator;
+
     private Vector3 target;
     public Transform[] dummyTr;
     private int indexDtr = 0;
@@ -37,6 +39,7 @@ public class EnemyAI : MonoBehaviour {
     public void Start()
 	{
 		targetPlayer = GameObject.FindWithTag("Player").transform;
+        animator = GetComponent<Animator>();
         //Get a reference to the Seeker component we added earlier
         seeker = GetComponent<Seeker>();
         EventManager.StartListening ("Sonar", ChasePlayer);
@@ -155,10 +158,11 @@ public class EnemyAI : MonoBehaviour {
     /// <param name="other">The other Collider2D involved in this collision.</param>
     void OnColliderEnter2D(Collider2D other)
     {
+        Debug.Log("COLLISION MONSTERR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         if(other.gameObject.tag == "Player")
         {
             // End game
-            
+            animator.SetBool("Attacking", true);
             other.gameObject.SetActive(false);
         }
     }
