@@ -11,9 +11,10 @@ public class Winpoint : MonoBehaviour {
 	/// <param name="other">The other Collider2D involved in this collision.</param>
 	void OnTriggerEnter2D(Collider2D other)
 	{
+        Debug.Log("COLLISSION");
 		if(other.gameObject.tag == "Player")
 		{
-			//endgame
+            Application.LoadLevel("Winner");
 		}
 	}
 }
