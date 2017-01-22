@@ -143,5 +143,6 @@ public class PlayerController : MonoBehaviour
 	void EndAnimation(){
 		activate = false;
 		animator.SetBool ("Activate", activate);
+		Debug.Log ("endanimation");
 	}
 }
