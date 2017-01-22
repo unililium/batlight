@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator EndAnimation()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         activate = false;
         sonarS.GetComponent<Animator>().SetBool("ActivateReturn", activate);
         sonarB.GetComponent<Animator>().SetBool("Activate", activate);
