@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     private bool activate;
     private bool isAlive;
 	public int rotationSpeed;
-
+    public Transform[] startingPoints;
 
 	public AudioClip [] sonarClips;
 	public AudioClip winClip;
@@ -38,9 +38,10 @@ public class PlayerController : MonoBehaviour
     {
        animator = GetComponent<Animator>();
        activate = false;
-        isAlive = true;
-		flapSource = GetComponent<AudioSource> ();
-
+       isAlive = true;
+       flapSource = GetComponent<AudioSource> ();
+       Transform temptr = startingPoints[Random.Range(0, startingPoints.Length - 1)];
+       transform.position = temptr.position;
     }
 	
 	void Update ()
