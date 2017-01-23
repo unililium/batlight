@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         if (isAlive) { 
             float moveVertical = Input.GetAxis("Vertical");
             float moveHorizontal;
-			moveHorizontal = Input.GetAxis("Horizontal");
+			moveHorizontal = Input.GetAxis("Mouse X");
 			if (moveVertical != 0)
             {
                 animator.SetBool("Moving", true);
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
             float previousRotation = this.transform.rotation.eulerAngles.z;
 			float newAngle = rotationSpeed * -1 * moveHorizontal + previousRotation;
             this.transform.rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
-           
+
             float newRotation = this.transform.rotation.eulerAngles.z;
             Vector3 movement = new Vector3(-1*moveVertical * Mathf.Sin(Mathf.Deg2Rad*newRotation) ,  moveVertical * Mathf.Cos(Mathf.Deg2Rad * newRotation), 0.0f);
             //Debug.Log(newAngle);
