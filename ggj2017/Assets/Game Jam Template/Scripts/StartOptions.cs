@@ -25,6 +25,7 @@ public class StartOptions : MonoBehaviour {
 	private ShowPanels showPanels;										//Reference to ShowPanels script on UI GameObject, to show and hide panels
 
 	public GameObject playingScreen;
+	public GameObject camera;
 	
 	void Awake()
 	{
@@ -120,6 +121,7 @@ public class StartOptions : MonoBehaviour {
 		Invoke("HideDelayed", fadeAlphaAnimationClip.length);
 		Debug.Log ("Game started in same scene! Put your game starting stuff here.");
 		playingScreen.SetActive(true);
+		camera.SetActive(true);
 	}
 
 
